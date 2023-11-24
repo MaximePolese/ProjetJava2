@@ -25,7 +25,7 @@ public class PersonnageDaoImpl implements PersonnageDao {
     }
 
     @Override
-    public Personnage add(Personnage personnage) {
+    public Personnage save(Personnage personnage) {
         personnages.add(personnage);
         return personnage;
     }

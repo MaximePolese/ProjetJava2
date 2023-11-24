@@ -28,7 +28,7 @@ public class CharacterController {
 
     @PostMapping(value = "/Personnages")
     public ResponseEntity<Personnage> ajouterPersonnage(@RequestBody Personnage personnage) {
-        Personnage persoAdded = personnageDao.add(personnage);
+        Personnage persoAdded = personnageDao.save(personnage);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

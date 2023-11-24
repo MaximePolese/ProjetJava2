@@ -7,7 +7,7 @@ public interface PersonnageDao {
 
     Personnage findById(int id);
 
-    Personnage add(Personnage personnage);
+    Personnage save(Personnage personnage);
 
     void update(Personnage personnage, int id);
 

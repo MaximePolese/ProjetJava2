@@ -1,15 +1,15 @@
 package com.example.projetjava2;
 
-public class Character {
+public class Personnage {
     private int id;
     private String name;
     private String type;
     private int life;
 
-    public Character() {
+    public Personnage() {
     }
 
-    public Character(int id, String name, String type, int life) {
+    public Personnage(int id, String name, String type, int life) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -50,7 +50,7 @@ public class Character {
 
     @Override
     public String toString() {
-        return "Character{" +
+        return "Personnage{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

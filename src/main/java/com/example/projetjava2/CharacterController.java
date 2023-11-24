@@ -29,15 +29,23 @@ public class CharacterController {
     @PostMapping(value = "/Personnages")
     public ResponseEntity<Personnage> ajouterPersonnage(@RequestBody Personnage personnage) {
         Personnage persoAdded = personnageDao.add(personnage);
-        if (Objects.isNull(persoAdded)) {
-            return ResponseEntity.noContent().build();
-        }
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(persoAdded.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping(value = "/Personnages/{id}")
+    public ResponseEntity<Personnage> modifierUnPersonnage(@RequestBody Personnage personnage, @PathVariable int id) {
+        Personnage persoModif = personnageDao.findById(id);
+        if (Objects.isNull(persoModif)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            personnageDao.update(personnage, id);
+            return ResponseEntity.ok(personnage);
+        }
     }
 
     @DeleteMapping(value = "/Personnages/{id}")
@@ -50,4 +58,5 @@ public class CharacterController {
         }
         return ResponseEntity.ok().build();
     }
+
 }

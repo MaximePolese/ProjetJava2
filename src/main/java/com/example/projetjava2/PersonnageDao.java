@@ -9,5 +9,7 @@ public interface PersonnageDao {
 
     Personnage add(Personnage personnage);
 
-    Personnage delete(int id);
+    void update(Personnage personnage, int id);
+
+    void delete(int id);
 }

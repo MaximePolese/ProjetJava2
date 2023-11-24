@@ -21,12 +21,7 @@ public class PersonnageDaoImpl implements PersonnageDao {
 
     @Override
     public Personnage findById(int id) {
-        for (Personnage personnage : personnages) {
-            if (personnage.getId() == id) {
-                return personnage;
-            }
-        }
-        return null;
+        return personnages.stream().filter(personnage -> personnage.getId() == id).findFirst().orElse(null);
     }
 
     @Override
@@ -36,14 +31,15 @@ public class PersonnageDaoImpl implements PersonnageDao {
     }
 
     @Override
-    public Personnage delete(int id) {
-        for (Personnage personnage : personnages) {
-            if (personnage.getId() == id) {
-                personnages.remove(personnage);
-                return personnage;
-            }
+    public void update(Personnage personnage, int id) {
+        if (personnage.getId() == id) {
+            personnages.set((id - 1), personnage);
         }
-        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+        personnages.removeIf(personnage -> personnage.getId() == id);
     }
 
 }

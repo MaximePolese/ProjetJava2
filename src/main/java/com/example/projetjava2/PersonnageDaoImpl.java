@@ -30,9 +30,20 @@ public class PersonnageDaoImpl implements PersonnageDao {
     }
 
     @Override
-    public Personnage save(Personnage personnage) {
+    public Personnage add(Personnage personnage) {
         personnages.add(personnage);
         return personnage;
+    }
+
+    @Override
+    public Personnage delete(int id) {
+        for (Personnage personnage : personnages) {
+            if (personnage.getId() == id) {
+                personnages.remove(personnage);
+                return personnage;
+            }
+        }
+        return null;
     }
 
 }

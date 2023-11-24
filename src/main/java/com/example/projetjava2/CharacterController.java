@@ -19,7 +19,6 @@ public class CharacterController {
     @GetMapping("/Personnages")
     public List<Personnage> listePersonnages() {
         return personnageDao.findAll();
-
     }
 
     @GetMapping(value = "/Personnages/{id}")
@@ -29,7 +28,7 @@ public class CharacterController {
 
     @PostMapping(value = "/Personnages")
     public ResponseEntity<Personnage> ajouterPersonnage(@RequestBody Personnage personnage) {
-        Personnage persoAdded = personnageDao.save(personnage);
+        Personnage persoAdded = personnageDao.add(personnage);
         if (Objects.isNull(persoAdded)) {
             return ResponseEntity.noContent().build();
         }
@@ -39,5 +38,16 @@ public class CharacterController {
                 .buildAndExpand(persoAdded.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping(value = "/Personnages/{id}")
+    public ResponseEntity<Personnage> supprimerUnPersonnage(@PathVariable int id) {
+        Personnage persoDelete = personnageDao.findById(id);
+        if (Objects.isNull(persoDelete)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            personnageDao.delete(id);
+        }
+        return ResponseEntity.ok().build();
     }
 }

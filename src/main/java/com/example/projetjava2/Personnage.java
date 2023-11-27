@@ -1,9 +1,15 @@
 package com.example.projetjava2;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class Personnage {
+    @Schema(name = "id", example = "1", required = true)
     private int id;
+    @Schema(name = "name", example = "Maxime")
     private String name;
+    @Schema(name = "type", example = "guerrier")
     private String type;
+    @Schema(name = "life", example = "10")
     private int life;
 
     public Personnage() {

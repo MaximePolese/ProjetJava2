@@ -45,7 +45,7 @@ public class CharacterController {
 
     @Operation(summary = "Ajouter un personnage")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Personnage ajouté",
+            @ApiResponse(responseCode = "201", description = "Personnage ajouté",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Personnage.class))})
     })

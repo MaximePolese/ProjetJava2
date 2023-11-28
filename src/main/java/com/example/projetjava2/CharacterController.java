@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -28,7 +27,7 @@ public class CharacterController {
                             schema = @Schema(implementation = Personnage.class))})
     })
     @GetMapping("/personnages")
-    public List<Personnage> listePersonnages() {
+    public Personnage[] listePersonnages() {
         return personnageDao.findAll();
     }
 

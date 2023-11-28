@@ -15,8 +15,8 @@ public class PersonnageDaoImpl implements PersonnageDao {
     }
 
     @Override
-    public List<Personnage> findAll() {
-        return personnages;
+    public Personnage[] findAll() {
+        return personnages.toArray(new Personnage[personnages.size()]);
     }
 
     @Override

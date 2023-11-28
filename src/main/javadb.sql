@@ -23,11 +23,10 @@ USE `javadb` ;
 CREATE TABLE IF NOT EXISTS `javadb`.`personnage` (
                                                      `id` INT NOT NULL AUTO_INCREMENT,
                                                      `name` VARCHAR(45) NULL,
-    `type` VARCHAR(45) NULL,
-    `life` INT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
-    ENGINE = InnoDB;
+                                                    `type` VARCHAR(45) NULL,
+                                                    `life` INT NULL,
+                                                    PRIMARY KEY (`id`),
+                                                    UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

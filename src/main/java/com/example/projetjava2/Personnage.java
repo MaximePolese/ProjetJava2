@@ -1,8 +1,15 @@
 package com.example.projetjava2;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class Personnage {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Schema(name = "id", example = "1", required = true)
     private int id;
     @Schema(name = "name", example = "Maxime")

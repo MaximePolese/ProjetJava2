@@ -27,7 +27,7 @@ public class CharacterController {
                             schema = @Schema(implementation = Personnage.class))})
     })
     @GetMapping("/personnages")
-    public Personnage[] listePersonnages() {
+    public Personnage[] listeDesPersonnages() {
         return personnageDao.findAll();
     }
 
@@ -49,7 +49,7 @@ public class CharacterController {
                             schema = @Schema(implementation = Personnage.class))})
     })
     @PostMapping(value = "/personnages")
-    public ResponseEntity<Personnage> ajouterPersonnage(@RequestBody Personnage personnage) {
+    public ResponseEntity<Personnage> ajouterUnPersonnage(@RequestBody Personnage personnage) {
         Personnage persoAdded = personnageDao.save(personnage);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

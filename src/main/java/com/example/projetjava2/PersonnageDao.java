@@ -1,7 +1,5 @@
 package com.example.projetjava2;
 
-import java.util.List;
-
 public interface PersonnageDao {
     Personnage[] findAll();
 

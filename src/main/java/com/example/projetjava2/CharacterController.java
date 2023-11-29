@@ -5,12 +5,18 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -45,19 +51,13 @@ public class CharacterController {
 
     @Operation(summary = "Ajouter un personnage")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Personnage ajouté",
+            @ApiResponse(responseCode = "200", description = "Personnage ajouté",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Personnage.class))})
     })
     @PostMapping(value = "/personnages")
-    public ResponseEntity<Personnage> ajouterUnPersonnage(@RequestBody Personnage personnage) {
-        Personnage persoAdded = personnageDao.save(personnage);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(persoAdded.getId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+    public Personnage ajouterUnPersonnage(@Valid @RequestBody Personnage personnage) {
+        return personnageDao.save(personnage);
     }
 
     @Operation(summary = "Supprimer un personnage")
@@ -86,7 +86,7 @@ public class CharacterController {
             @ApiResponse(responseCode = "404", description = "Not found",
                     content = @Content)})
     @PutMapping(value = "/personnages/{id}")
-    public ResponseEntity<Personnage> modifierUnPersonnage(@RequestBody Personnage personnage, @PathVariable int id) {
+    public ResponseEntity<Personnage> modifierUnPersonnage(@Valid @RequestBody Personnage personnage, @PathVariable int id) {
         Personnage persoModif = personnageDao.findById(id);
         if (Objects.isNull(persoModif)) {
             return ResponseEntity.notFound().build();
@@ -94,5 +94,18 @@ public class CharacterController {
             personnageDao.save(personnage);
             return ResponseEntity.ok(personnage);
         }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 }

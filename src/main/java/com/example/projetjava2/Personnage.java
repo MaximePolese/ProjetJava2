@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Personnage {
@@ -12,10 +15,16 @@ public class Personnage {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Schema(name = "id", example = "1", required = true)
     private int id;
+    @NotNull(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     @Schema(name = "name", example = "Maxime")
     private String name;
+    @NotNull(message = "Type is mandatory")
+    @NotBlank(message = "Type is mandatory")
     @Schema(name = "type", example = "guerrier")
     private String type;
+    @NotNull(message = "Life can't be null")
+    @Min(value = 1)
     @Schema(name = "life", example = "10")
     private int life;
 

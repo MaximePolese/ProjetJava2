@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +41,20 @@ public class CharacterController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Personnage affiché",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Personnage.class))})
-    })
+                            schema = @Schema(implementation = Personnage.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content)})
     @GetMapping(value = "/personnages/{id}")
-    public Personnage afficherUnPersonnage(@PathVariable int id) {
-        return personnageDao.findById(id);
+    public ResponseEntity<Personnage> afficherUnPersonnage(@PathVariable int id) {
+        Personnage myHero = personnageDao.findById(id);
+//        if(myHero==null) throw new PersonnageIntrouvableException("Le personnage avec l'id " + id + " est INTROUVABLE");
+        if (myHero == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le personnage avec l'id " + id + " est INTROUVABLE");
+//        if (Objects.isNull(myHero)) {
+//            return ResponseEntity.notFound().build();
+//        } else {
+        return ResponseEntity.ok(myHero);
+//        }
     }
 
     @Operation(summary = "Ajouter un personnage")

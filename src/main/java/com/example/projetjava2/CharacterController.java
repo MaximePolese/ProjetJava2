@@ -60,24 +60,6 @@ public class CharacterController {
         return ResponseEntity.created(location).build();
     }
 
-//    @Operation(summary = "Modifier un personnage par son id")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Personnage modifié",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = Personnage.class))}),
-//            @ApiResponse(responseCode = "404", description = "Not found",
-//                    content = @Content)})
-//    @PutMapping(value = "/personnages/{id}")
-//    public ResponseEntity<Personnage> modifierUnPersonnage(@RequestBody Personnage personnage, @PathVariable int id) {
-//        Personnage persoModif = personnageDao.findById(id);
-//        if (Objects.isNull(persoModif)) {
-//            return ResponseEntity.notFound().build();
-//        } else {
-//            personnageDao.update(personnage, id);
-//            return ResponseEntity.ok(personnage);
-//        }
-//    }
-
     @Operation(summary = "Supprimer un personnage")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Personnage supprimé",
@@ -94,5 +76,23 @@ public class CharacterController {
             personnageDao.deleteById(id);
         }
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Modifier un personnage par son id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Personnage modifié",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Personnage.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content)})
+    @PutMapping(value = "/personnages/{id}")
+    public ResponseEntity<Personnage> modifierUnPersonnage(@RequestBody Personnage personnage, @PathVariable int id) {
+        Personnage persoModif = personnageDao.findById(id);
+        if (Objects.isNull(persoModif)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            personnageDao.save(personnage);
+            return ResponseEntity.ok(personnage);
+        }
     }
 }

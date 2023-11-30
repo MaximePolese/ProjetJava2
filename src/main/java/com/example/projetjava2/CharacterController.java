@@ -47,14 +47,9 @@ public class CharacterController {
     @GetMapping(value = "/personnages/{id}")
     public ResponseEntity<Personnage> afficherUnPersonnage(@PathVariable int id) {
         Personnage myHero = personnageDao.findById(id);
-//        if(myHero==null) throw new PersonnageIntrouvableException("Le personnage avec l'id " + id + " est INTROUVABLE");
         if (myHero == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le personnage avec l'id " + id + " est INTROUVABLE");
-//        if (Objects.isNull(myHero)) {
-//            return ResponseEntity.notFound().build();
-//        } else {
         return ResponseEntity.ok(myHero);
-//        }
     }
 
     @Operation(summary = "Ajouter un personnage")
@@ -65,7 +60,13 @@ public class CharacterController {
     })
     @PostMapping(value = "/personnages")
     public Personnage ajouterUnPersonnage(@Valid @RequestBody Personnage personnage) {
+//        Personnage myHero = personnageDao.findById(personnage.getId());
+//        System.out.println(myHero);
+//        if (myHero != null) {
+//            return ResponseEntity.notFound().build();
+//        } else {
         return personnageDao.save(personnage);
+//        }
     }
 
     @Operation(summary = "Supprimer un personnage")
